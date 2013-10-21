@@ -1,0 +1,8 @@
+{% extends "admin/change_form.html" %}
+
+{% load widget_photo_iframe %}
+
+{% block footer %}
+    {{ block.super }}
+    {% widget_photo_iframe opts.app_label opts.object_name object_id change %}
+{% endblock %}

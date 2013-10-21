@@ -1,0 +1,94 @@
+.no-display {
+    display: none;
+}
+
+div.proyecto-form-col1{
+    width: 65%;
+    float: left;
+}
+div.proyecto-form-col2{
+    width: 30%;
+    float: left;
+    margin-left: 1%;
+}
+
+/* begin fotos tool */
+div.fotos_tool{
+    background: url('../../adminphotoload/img/nav-bg.gif') repeat-x scroll 0 100% white;
+    border: 1px solid #CCCCCC;
+    height: 281px;
+    width: 360px;
+    margin: 5px 0;
+    overflow: hidden;
+    padding: 5px 7px;
+    text-align: right;
+}
+div.fotosTool_left{
+    float: left;
+    width: 30px;
+    text-align: center;
+}
+div.fotosTool_left img{
+    margin-top: 124px;
+    margin-bottom: 110px;
+}
+div.fotosTool_center{
+    float: left;
+    width: 300px;
+    text-align: center;
+}
+div.fotosTool_center img{
+    margin-top: 25px;
+}
+div.fotosTool_center img.selected{
+    display: inline !important;
+}
+
+div.fotosTool_centerRuler{
+    height:250px;
+    width: 0px;
+    float: left;
+}
+div.fotosTool_right{
+    float: left;
+    width: 30px;
+    text-align: center;
+}
+div.fotosTool_right img{
+    margin-top: 124px;
+    margin-bottom: 110px;
+}
+div.fotosTool_iconDelete{
+    float: left;
+    text-align: right;
+}
+div.fotosTool_iconDelete input[type=submit]{
+    color: #CC3434;
+    font-size: 12px;
+    background:url("../../adminphotoload/img/icon_deletelink.gif") no-repeat scroll 0 5px transparent;
+    padding-left: 10px;
+    border: none;
+    margin-left: 115px;
+    cursor: pointer;
+}
+div.fotosTool_iconDelete input[type=submit]:hover{
+    color: #993333;
+    font-weight: bold;
+}
+div.fotosTool_iconEdit{
+    float: right;
+    text-align: left;
+}
+div.fotosTool_iconEdit input[type=submit]{
+    color: #5B80B2;
+    font-size: 12px;
+    background:url("../../adminphotoload/img/icon_changelink.gif") no-repeat scroll 0 5px transparent;
+    padding-left: 10px;
+    border: none;
+    margin-right: 115px;
+}
+div.fotosTool_iconEdit input[type=submit]:hover{
+    color: #003366;
+    font-weight: bold;
+}
+/* end fotos tool */

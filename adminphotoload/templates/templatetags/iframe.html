@@ -1,0 +1,14 @@
+{% load url from future %}
+
+<style type="text/css">
+    iframe {
+        border: none;
+        margin-top: 20px;
+    }
+</style>
+
+{% if id %}
+<div class='proyecto-form-part2'>
+    <iframe name='add_fotos' class='fotos_videos' src="{% url 'admin:admin_add_fotos' app model id %}" width="100%" height="360px"></iframe>
+</div>
+{% endif %}

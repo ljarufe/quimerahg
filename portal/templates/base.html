@@ -1,0 +1,882 @@
+{% load thumbnail form_display i18n %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Quimera HG" />
+    <meta name="keywords" content="quimera holding group arequipa hg" />
+
+    <link rel="stylesheet/less" type="text/css" href="{{ STATIC_URL }}portal/css/base.less" />
+    <link rel="stylesheet/less" type="text/css" href="{{ STATIC_URL }}common/js/jquery.scroller/jquery.scroller.css" />
+    <link rel="stylesheet/less" type="text/css" href="{{ STATIC_URL }}common/js/fancybox/jquery.fancybox.css" />
+    <link href="{{ STATIC_URL }}common/img/favicon.ico" rel="SHORTCUT ICON">
+
+    <script src="{{ STATIC_URL }}common/js/less-1.3.0.min.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}common/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}common/js/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}common/js/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}common/js/jquery.mousewheel-3.0.6.pack.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}common/js/jquery.over-slider/jquery.over-slider.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}common/js/jquery.scroller/jquery.scroller.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}common/js/typeface.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}common/js/microgrammadbolext_regular.typeface.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        var GET_PROYECTO_URL = "{% url get_proyecto_json %}";
+        var intervals = [0, 600, 1200, 1800, 2400, 3000, 3500, 10000];
+        var act_position;
+        var _active = function(object, growth, slider) {
+            if(slider) {
+                slider.animate({"scrollTop": "-=" + 100000});
+            }
+            object.stop().animate({"height": 1350 + growth}, 1000);
+            object.children(".background_img").stop().animate({"top": 322 + growth}, 1000);
+            object.children().children("h1").animate({"opacity": 1}, 1500);
+        };
+
+        var active_s1 = function(growth) {
+            $(".s1 .footer").stop().animate({"top": 420 + growth/2}, 1000);
+        };
+
+        var active_s2 = function(growth) {
+            $(".controls").children(".nav[position='1']").click();
+            _active($(".s2"), growth, $(".slider"));
+            $(".s2 .slider-container").fadeIn("slow").css({"margin-top": 100 + growth/3});
+        };
+
+        var active_s3 = function(growth) {
+            $(".s3 #home_s3").css({"background": "url('/static/common/img/s3_home_bg.jpg') repeat-y"});
+            $(".s3 .slider_division").stop().animate({"top": 320 + growth/3}, 1000);
+            $(".s3 .tira_fotos").stop().animate({"top": 570 + growth/3}, 1000);
+            $(".s3 .slider_divisiones").css({"height": 1000 + growth}).fadeIn();
+            $(".s3 .slide").css({"height": 1000 + growth});
+            $(".s3 .menu_extra_divisiones").css({"top": 390 + growth/2});
+            $(".s3 #inicio_divisiones").animate({"margin-top": 350 + growth/2}, 1000);
+            _active($(".s3"), growth);
+        };
+
+        var active_s4 = function(growth) {
+            $(".logo_rep").animate({"margin-top": -140 + growth/3}, 1000);
+            $(".representantes").animate({"margin-top": 185 + growth/3}, 1000);
+            $(".s4").stop().animate({"height": 1350 + growth}, 1000);
+            $(".s4").children(".background_img").stop().animate({"top": 462 + growth}, 1000);
+            $(".s4").children().children("h1").animate({"opacity": 1}, 1500);
+        };
+
+        var active_s5 = function(growth) {
+            $(".responsabilidad_control").animate({"margin-top": -55 + growth/3}, 1000);
+            _active($(".s5"), growth);
+        };
+
+        var active_s6 = function(growth) {
+            $(".noticias_controls_slider").animate({"margin-top": -125 + growth/3}, 1000);
+            $(".noticias_slider").animate({"margin-top": 75 + growth/3}, 1000);
+            _active($(".s6"), growth);
+        };
+
+        var active_s7 = function(growth) {
+            $(".s7").stop().animate({"height": 1100 + growth}, 1000);
+            $(".info").animate({"margin-top": -30 + growth/3}, 1000);
+            $(".form").animate({"margin-top": -25 + growth/3}, 1000);
+            $(".s7 h1").animate({"margin-top": 240 + growth/2}, 1000).animate({"opacity": 1}, 1500);
+            $(".mapa").animate({"margin-top": -240 + growth/2}, 1000);
+        };
+
+        var _inactive = function(object, func) {
+            object.stop().animate({"height": 1350}, 1000, func);
+            object.children().children("h1").animate({"opacity": 0}, 1500);
+            object.children(".background_img").stop().animate({"top": 322}, 1000);
+        };
+
+        var inactive_s1 = function() {
+            $(".s1 .footer").stop().animate({
+                    "top": 420
+                }, 1000
+            );
+        };
+
+        var inactive_s2 = function() {
+            _inactive($(".s2"),
+                function() {
+                    $(".s2 .slider-container").fadeOut("slow").css({"margin-top": 100});
+                }
+            );
+        };
+
+        var inactive_s3 = function() {
+            $(".s3 .background_img").attr("src", "").fadeOut(800);
+            $(".menu_estilo_divisiones").children(".nav[position='1']").click();
+            $(".s3 .slider_division").stop().animate({"top": 320}, 1000);
+            $(".s3 .tira_fotos").stop().animate({"top": 570}, 1000);
+            $(".s3 .slider_divisiones").css({"height": 1000}).fadeOut();
+            $(".s3 .slide").css({"height": 1000});
+            $(".menu_extra_divisiones").css({"top": 390});
+            $("#inicio_divisiones").animate({"margin-top": 350}, 1000);
+            $("#home_s3").css({"background": "transparent"});
+            _inactive($(".s3"));
+{#            $(".controls_division").children(".nav[position='1']").click();#}
+        };
+
+        var inactive_s4 = function() {
+            $(".control_representantes").children(".nav[position='1']").click();
+            $(".logo_rep").animate({"margin-top": -140}, 1000);
+            $(".representantes").animate({"margin-top": 185}, 1000);
+            $(".s4").stop().animate({"height": 1350}, 1000);
+            $(".s4").children().children("h1").animate({"opacity": 0}, 1500);
+            $(".s4").children(".background_img").stop().animate({"top": 462}, 1000);
+        };
+
+        var inactive_s5 = function() {
+            $(".responsabilidad_control").animate({"margin-top": -55}, 1000).children(".nav[position='1']").click();
+            _inactive($(".s5"));
+        };
+
+        var inactive_s6 = function() {
+            $(".noticias_controls").children(".nav[position='1']").click();
+            $(".noticias_controls_slider").animate({"margin-top": -125}, 1000);
+            $(".noticias_slider").animate({"margin-top": 75}, 1000);
+            _inactive( $(".s6"));
+        };
+
+        var inactive_s7 = function() {
+            $(".info").animate({"margin-top": 30}, 1000);
+            $(".form").animate({"margin-top": 25}, 1000);
+            $(".s7 h1").animate({"margin-top": 160}, 1000).animate({"opacity": 0}, 1500);
+            $(".mapa").animate({"margin-top": -240}, 1000);
+            $(".s7").stop().animate({"height": 1100}, 1000);
+        };
+
+        var range_search = function(num) {
+            for(var i=0; i<intervals.length; i++)
+                if(num<=intervals[i]) return i-1;
+            return false;
+        };
+
+        $(document).ready(function() {
+            // Animación por secciones
+            var e_functions = [active_s1, active_s2, active_s3, active_s4, active_s5, active_s6, active_s7];
+            var d_functions = [inactive_s1, inactive_s2, inactive_s3, inactive_s4, inactive_s5, inactive_s6, inactive_s7];
+            // Al iniciar
+            act_position = range_search( $(".header").offset().top );
+            if(act_position == 0) e_functions[act_position](parseInt( $(window).height()*0.4 ));
+            // Al moverse
+            $(window).scroll(function() {
+                var old_position = act_position;
+                act_position = range_search( $(".header").offset().top );
+                if(old_position != act_position) {
+                    d_functions[old_position]();
+                    var growth = parseInt( $(window).height()*0.4 );
+                    e_functions[act_position](growth);
+                }
+            });
+
+            // Menu principal
+            $(".link").on("click", function() {
+                var act_position = $(this).offset().top;
+                var new_position = $(this).attr("position");
+                var distance = Math.abs(new_position - act_position);
+                if(new_position > act_position)
+                    $("body").animate({"scrollTop": "+=" + distance}, 1200, 'easeInOutExpo');
+                else
+                    $("body").animate({"scrollTop": "-=" + distance}, 1200, 'easeInOutExpo');
+            });
+
+            // Imágenes de inicio
+            $(".photos img").click(function() {
+                var new_photo = "{{ STATIC_URL }}common/img/main_bg" + $(this).attr("pos") + ".png";
+                $(".s1>img").fadeOut(600, function() {
+                    $(".s1>img").attr("src", new_photo).fadeIn(600);
+                });
+            });
+            var photo_random = {{ photo_random }};
+            var timer = setInterval(function() {
+                $(".s1>img").fadeOut(600, function() {
+                    $(".s1>img").attr("src", "{{ STATIC_URL }}common/img/main_bg" + (photo_random%4 + 1) + ".png").fadeIn(600);
+                });
+                photo_random++;
+            }, 8000);
+
+            // Slider en s2
+            $(".slider").OverSlider({
+                controls_container: $(".controls"),
+                controls_type: BOTH,
+                controls_labels: {numbers: ["{% trans "quienes somos" %}",
+                                            "{% trans "historia" %}",
+                                            "{% trans "misión y visión" %}",
+                                            "{% trans "valores" %}",
+                                            "{% trans "filosofía" %}"],
+                                  label_up: " ",
+                                  label_down: " "},
+                easing: 'easeInOutExpo',
+                speed: 800
+            });
+
+            // Slider en s3
+            $(".slider_divisiones").OverSlider({
+                controls_container: $(".menu_divisiones"),
+                controls_type: NONE,
+                easing: 'easeInOutExpo',
+                speed: 1000
+            });
+
+            // Slider horizontal de las fotos
+            $(".next_foto").click(function() {
+                $(this).prev().animate({"scrollLeft": "+=" + 500}, 1200, 'easeInOutExpo');
+            });
+            $(".prev_foto").click(function() {
+                $(this).next().animate({"scrollLeft": "-=" + 500}, 1200, 'easeInOutExpo');
+            });
+
+            // Sliders en el slider s3
+            $(".slide").children(".slider_division").each(function() {
+                var controllers = ["{% trans "quienes somos" %}"];
+                var top = 140;
+                if($(this).attr("proyectos") == "True") {
+                    controllers.push("{% trans "proyectos" %}");
+                    top -= 30;
+                }
+                if($(this).attr("marcas") == "True") {
+                    controllers.push("{% trans "marcas" %}");
+                    top -= 30;
+                }
+                if($(this).attr("lineas") == "True") {
+                    controllers.push("{% trans "lineas" %}");
+                    top -= 30;
+                }
+                if($(this).attr("clientes") == "True") {
+                    controllers.push("{% trans "clientes" %}");
+                    top -= 30;
+                }
+                $(".controls_division[pos=" + $(this).attr("pos") + "]").css("top", top);
+
+                $(this).OverSlider({
+                    controls_container: $(this).prev(".controls_division"),
+                    controls_type: NUMBERS,
+                    controls_labels: {numbers: controllers},
+                    controls_id: true,
+                    controls_id_prefix: "id_div" + $(this).attr("pos") + "_cont_",
+                    easing: 'easeInOutExpo',
+                    speed: 800
+                });
+
+                $(this).children(".slide_division_info").children(".slider_proyectos").each(function() {
+                    $(this).OverSlider({
+                         controls_container: $(this).parent().children(".controls_proyectos"),
+                         controls_type: NONE,
+                         easing: 'easeInOutExpo',
+                         speed: 800
+                     });
+                });
+            });
+
+            // Cambiar la imágen de fondo
+            $(".menu_divisiones div").click(function() {
+                var img = $(this).attr("bg_image");
+                $(".s3 .background_img").fadeOut(800, function() {
+                    $(this).attr("src", img).fadeIn(800);
+                });
+            });
+
+            // Menú desplegable de categorías y proyectos
+            $(".slide").children(".proyectos_menu").each(function() {
+                var slide = $(this).parent(".slide");
+                var slide_num = $(this).attr("pos");
+                var proyectos_menu = $(this);
+                $("#id_div" + slide_num + "_cont_proyectos").click(function() {
+                    proyectos_menu.show("slow");
+                });
+                proyectos_menu.children(".nav").each(function() {
+                    $(this).click(function() {
+                        var categoria_menu = $(this).children(".categoria_menu");
+                        categoria_menu.slideToggle("slow");
+                        categoria_menu.children(".proyecto_launcher").each(function() {
+                            $(this).click(function() {
+                                proyectos_menu.hide("slow");
+                                var request = $.ajax({
+                                    url: GET_PROYECTO_URL,
+                                    type: "GET",
+                                    data: {id_: $(this).attr("id_proyecto")},
+                                    dataType: "html"
+                                });
+                                request.done(function(msg) {
+                                    var data = jQuery.parseJSON(msg);
+                                    var proyecto_html =
+                                        '<div class="paragraph">' +
+                                            '<span>' + data.nombre + ':</span> ' + data.descripcion +
+                                            '<a href="' + data.url + '" target="_blank">' + data.url + '</a>' +
+                                        '</div>';
+                                    if(data.fotos.length) {
+                                        proyecto_html +=
+                                            '<div class="fotos_proyecto">' +
+                                                '<div class="fotos_container">' +
+                                                    '<div class="fotos">';
+                                        for(var i=0; i<data.fotos.length; i++) {
+                                            proyecto_html +=
+                                                '<a class="fancybox" rel="group" href="' + data.fotos[i].imagen + '">' +
+                                                    '<img src="' + data.fotos[i].thumbnail + '" alt="' + data.fotos[i].nombre + '" title="' + data.fotos[i].nombre + '">' +
+                                                '</a>';
+                                        }
+                                        proyecto_html +=
+                                                    '</div>' +
+                                                '</div>' +
+                                            '</div>';
+                                    }
+                                    slide.find(".slide_proyecto").fadeOut(500, function() {
+                                        $(this).html(proyecto_html);
+                                        $(this).fadeIn(500);
+                                    })
+                                });
+                            });
+                        });
+                    });
+                })
+            });
+
+            // Slider en s4
+            var labels = ["{% trans "Quimera" %}"];
+            {% for division in divisiones %}
+                labels.push("{{ division.nombre }}");
+            {% endfor %}
+            $(".representantes").OverSlider({
+                controls_container: $(".control_representantes"),
+                controls_type: NUMBERS,
+                controls_labels: {numbers: labels},
+                easing: 'easeInOutExpo',
+                height: 135,
+                speed: 1200
+            });
+
+            var responsabilidad_controls = ["{% trans "Introducción" %}",
+                "{% trans "Políticas corporativas" %}"];
+            {% for campania in campanias %}
+                responsabilidad_controls.push("{{ campania.nombre }}");
+            {% endfor %}
+
+            // Sliders en s5
+            $(".responsabilidad_slider").OverSlider({
+                controls_container: $(".responsabilidad_control"),
+                controls_type: NUMBERS,
+                controls_labels: {numbers: responsabilidad_controls},
+                easing: 'easeInOutExpo',
+                speed: 800
+            });
+            $(".actividades_slider").OverSlider({
+                controls_container: $(".actividades_control"),
+                controls_type: PREV_NEXT,
+                controls_labels: {label_up: " ", label_down: " "},
+                easing: 'easeInOutExpo',
+                speed: 800
+            });
+            $("#fotos_actividad").OverSlider({
+                controls_container: $(".actividades_control"),
+                controls_type: NONE,
+                easing: 'easeInOutExpo',
+                speed: 800
+            });
+
+            // Slider en s6
+            labels = new Array();
+            {% for noticia in noticias %}
+                labels.push("{{ noticia.nombre }}");
+            {% endfor %}
+            $(".noticias_slider").OverSlider({
+                controls_container: $(".noticias_controls"),
+                controls_type: NUMBERS,
+                controls_labels: {numbers: labels},
+                easing: 'easeInOutExpo',
+                speed: 800
+            });
+            $(".noticias_controls_slider>.prev").click(function() {
+                $(".noticias_controls").animate({"scrollTop": "-=100"}, 800, 'easeInOutExpo');
+            });
+            $(".noticias_controls_slider>.next").click(function() {
+                $(".noticias_controls").animate({"scrollTop": "+=100"}, 800, 'easeInOutExpo');
+            });
+
+            // Formulario
+            var borrar = function() {
+                $("#id_nombre").val("");
+                $("#id_email").val("");
+                $("#id_comentario").val("");
+            };
+
+            $("#borrar").click(function() {
+                borrar();
+            });
+            {% if form.is_bound %}
+                $("body").animate({"scrollTop": "+=" + 3800}, 1200, 'easeInOutExpo');
+                {% if form.is_valid %}
+                    borrar();
+                    $("#form-ok").html("{% trans "Su mensaje ha sido enviado" %}");
+                {% endif %}
+            {% endif %}
+
+            $(".fancybox").fancybox();
+        })
+    </script>
+
+    <title>Quimera HG</title>
+</head>
+<body>
+    <div class="container">
+        <div class="s1">
+            <img src="{{ STATIC_URL }}common/img/main_bg{{ photo_random }}.png">
+            <div class="footer">
+                <div class="footer-body">
+                    <div class="logo">
+                        <img src="{% thumbnail empresa.logo 220x100 %}" alt="logo">
+                    </div>
+                    <div class="photos">
+                        <img src="{{ STATIC_URL }}common/img/rot_1.jpg" pos="1" alt="">
+                        <img src="{{ STATIC_URL }}common/img/rot_2.jpg" pos="2" alt="">
+                        <img src="{{ STATIC_URL }}common/img/rot_3.jpg" pos="3" alt="">
+                        <img src="{{ STATIC_URL }}common/img/rot_4.jpg" pos="4" alt="">
+                    </div>
+                    <div class="copyright">
+                        © Copyright 2012 Quimera holding group. All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="s s2">
+            <div class="title_rojo">
+                <h1 class="typeface-js" style="font-family: MicrogrammaDBolExt; font-weight: normal;">{% trans "quienes somos" %}</h1>
+            </div>
+            <img class="background_img" src="{{ STATIC_URL }}common/img/bg_quienes_somos.png">
+            <div class="content slider-container">
+                <div class="slider">
+                    <div>
+                        <h2>{% trans "QUIENES SOMOS" %}</h2>
+                        <div class="paragraph">{{ empresa.descripcion|safe }}</div>
+                    </div>
+                    <div>
+                        <h2>{% trans "HISTORIA" %}</h2>
+                        <div class="paragraph">{{ empresa.historia|safe }}</div>
+                    </div>
+                    <div>
+                        <h2>{% trans "MISIÓN Y VISIÓN" %}</h2>
+                        <div class="paragraph">
+                            {{ empresa.mision|safe }}
+                            {{ empresa.vision|safe }}
+                        </div>
+                    </div>
+                    <div>
+                        <h2>{% trans "VALORES" %}</h2>
+                        <div class="paragraph">{{ empresa.valores|safe }}</div>
+                    </div>
+                    <div>
+                        <h2>{% trans "FILOSOFÍA" %}</h2>
+                        <div class="paragraph">{{ empresa.filosofia|safe }}</div>
+                    </div>
+                </div>
+                <div class="controls"> </div>
+            </div>
+        </div>
+
+        <div class="s s3">
+            <div class="title_gris">
+                <div class="menu_divisiones menu_estilo_divisiones">
+                    <div class="nav num active" position="1" bg_image=""></div>
+                {% for division in divisiones %}
+                    <div class="nav num"
+                         position="{{ forloop.counter|add:1 }}"
+                         bg_image="{{ MEDIA_URL }}{{ division.bg_image }}">
+                        ■ {{ division.nombre|lower }}
+                    </div>
+                {% endfor %}
+                </div>
+                <h1 class="typeface-js" style="font-family: MicrogrammaDBolExt; font-weight: normal;">{% trans "divisiones" %}</h1>
+            </div>
+            <img class="background_img" src="">
+            <div class="slider_divisiones">
+                <div class="slide" id="home_s3">
+                    <div class="menu_divisiones menu_extra_divisiones">
+                        {% for division in divisiones %}
+                            <div class="nav num"
+                                 position="{{ forloop.counter|add:1 }}"
+                                 bg_image="{{ MEDIA_URL }}{{ division.bg_image }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <img id="inicio_divisiones" src="{{ STATIC_URL }}common/img/divisiones.jpg" alt="">
+                </div>
+                {% for division in divisiones %}
+                    <div class="slide">
+                        <div class="division_nombre">
+                            <img src="{% thumbnail division.logo 129x75 %}" alt="{{ division.nombre }}" />
+                        </div>
+                        {% if division.categoria_set.all %}
+                            <div class="proyectos_menu" pos="{{ forloop.counter }}">
+                                {% for categoria in division.categoria_set.all %}
+                                    <div class="nav num">
+                                        <div class="categoria_item">{{ categoria }}</div>
+                                        <div class="categoria_menu">
+                                            {% for proyecto in categoria.proyecto_set.all %}
+                                                <div class="nav num proyecto_launcher" id_proyecto="{{ proyecto.id }}">
+                                                    {{ proyecto }}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="controls_division" pos="{{ forloop.counter }}"></div>
+                        <div class="slider_division"
+                             proyectos="{% if division.categoria_set.all %}True{% else %}False{% endif %}"
+                             marcas="{% if division.categoriamarca_set.all %}True{% else %}False{% endif %}"
+                             lineas="{% if division.categorialinea_set.all %}True{% else %}False{% endif %}"
+                             clientes="{% if division.clientes %}True{% else %}False{% endif %}"
+                             pos="{{ forloop.counter }}">
+
+                            {# Quienes somos #}
+                            <div class="paragraph slide_division_info">
+                                {{ division.descripcion|safe }}
+                            </div>
+
+                            {# Proyectos #}
+                            {% if division.categoria_set.all %}
+                                <div class="slide_division_info">
+                                    <div class="slide_proyecto proyecto_info"></div>
+                                </div>
+                            {% endif %}
+
+                            {# Marcas #}
+                            {% if division.categoriamarca_set.all %}
+                                <div class="slide_division_info">
+                                    <div class="controls_proyectos">
+                                        {% for categoria in division.categoriamarca_set.all %}
+                                            <div class="nav num{% if forloop.counter == 1 %} active{% endif %}" position="{{ forloop.counter }}">
+                                                <h4>{{ categoria.nombre }}</h4>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="clear"></div>
+                                    <div class="slider_proyectos">
+                                        {% for categoria in division.categoriamarca_set.all %}
+                                            <div class="slide_proyecto">
+                                                <div class="slider_deeper_controls">
+                                                    {% for proyecto in categoria.proyecto_set.all %}
+                                                        <div class="nav num{% if forloop.counter == 1 %} active{% endif %}" position="{{ forloop.counter }}" _id="{{ proyecto.id }}">{{ forloop.counter }}</div>
+                                                    {% endfor %}
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="slider_deeper">
+                                                    {% for marca in categoria.marca_set.all %}
+                                                        <div>
+                                                            {% if marca.url %}
+                                                                <a href="{{ marca.url }}">
+                                                                    <img src="{% thumbnail marca.imagen 150x100 %}" title="{{ marca.nombre }}" alt="{{ marca.nombre }}">
+                                                                </a>
+                                                            {% else %}
+                                                                <img src="{% thumbnail marca.imagen 150x100 %}" title="{{ marca.nombre }}" alt="{{ marca.nombre }}">
+                                                            {% endif %}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {# Lineas #}
+                            {% if division.categorialinea_set.all %}
+                                <div class="slide_division_info">
+                                    <div class="controls_proyectos">
+                                        {% for categoria in division.categorialinea_set.all %}
+                                            <div class="nav num{% if forloop.counter == 1 %} active{% endif %}" position="{{ forloop.counter }}">
+                                                <h4>{{ categoria.nombre }}</h4>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="clear"></div>
+                                    <div class="slider_proyectos">
+                                        {% for categoria in division.categorialinea_set.all %}
+                                            <div class="slide_proyecto">
+                                                <div class="slider_deeper_controls"></div>
+                                                <div class="clear"></div>
+                                                <div class="slider_deeper">
+                                                    {% for linea in categoria.linea_set.all %}
+                                                        <div class="paragraph">
+                                                            <span>{{ linea.nombre }}:</span> {{ linea.descripcion|safe }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {# Clientes #}
+                            {% if division.clientes %}
+                                <div class="paragraph slide_division_info">
+                                    {{ division.clientes|safe }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="s s4">
+            <div class="title_rojo">
+                <h1 class="typeface-js" style="font-family: MicrogrammaDBolExt; font-weight: normal;">{% trans "representantes" %}</h1>
+            </div>
+            <img class="background_img" src="{{ STATIC_URL }}common/img/bg_representantes.png">
+            <img class="logo_rep" src="{{ STATIC_URL }}common/img/logo_rep.png" alt="Quimera HG">
+            <div class="representantes">
+                <div class="slide">
+                {% for representante in representantes %}
+                    <div>
+                        <ul>
+                            <li>
+                                {{ representante.nombre }}
+                            </li>
+                            <li>
+                                {{ representante.cargo }}
+                            </li>
+                            <li>
+                                {{ representante.email }}
+                            </li>
+                        </ul>
+                    </div>
+                {% endfor %}
+                </div>
+                {% for division in divisiones %}
+                <div class="slide">
+                {% for representante in division.representantes.all %}
+                    <div>
+                        <ul>
+                            <li>
+                                {{ representante.nombre }}
+                            </li>
+                            <li>
+                                {{ representante.cargo }}
+                            </li>
+                            <li>
+                                {{ representante.email }}
+                            </li>
+                        </ul>
+                    </div>
+                {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+            <div class="menu_representantes">
+                <div class="control_representantes"></div>
+            </div>
+        </div>
+
+        <div class="s s5">
+            <div class="title_gris">
+                <h1 class="typeface-js" style="font-family: MicrogrammaDBolExt; font-weight: normal;">{% trans "responsabilidad social" %}</h1>
+            </div>
+            <img class="background_img" src="{{ STATIC_URL }}common/img/bg_responsabilidad.png">
+            <div class="responsabilidad_control"></div>
+            <div class="responsabilidad_slider">
+                <div class="slide">
+                    <h2>{% trans "Introducción" %}</h2>
+                    <div class="content paragraph">{{ responsabilidad.introduccion|safe }}</div>
+                </div>
+                <div class="slide">
+                    <h2>{% trans "Políticas" %}</h2>
+                    <div class="content paragraph">{{ responsabilidad.politica|safe }}</div>
+                </div>
+                {% for campania in campanias %}
+                    <div class="slide">
+                        <div class="actividades_control">
+                            <h2>{% trans "Actividades" %}</h2>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="actividades_slider">
+                        {% for actividad in campania.actividad_set.all %}
+                            <div class="slide">
+                                <h3>{{ actividad.nombre }}</h3>
+                                <div class="content paragraph">{{ actividad.descripcion|safe }}</div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="tira_fotos" id="fotos_actividad">
+            {% for actividad in actividades %}
+                <div class="fotos_proyecto">
+                    {% if actividad.fotos.all %}
+                        <div class="nav prev_foto"></div>
+                        <div class="fotos_container">
+                            <div class="fotos">
+                            {% for foto in actividad.fotos.all %}
+                                <a class="fancybox" rel="group" href="{{ MEDIA_URL }}{{ foto.imagen }}">
+                                    <img src="{% thumbnail foto.imagen 160x110 upscale crop %}" title="{{ noticia.nombre }}">
+                                </a>
+                            {% endfor %}
+                            </div>
+                        </div>
+                        <div class="nav next_foto"></div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+
+        <div class="s s6">
+            <div class="title_rojo">
+                <h1 class="typeface-js" style="font-family: MicrogrammaDBolExt; font-weight: normal;">{% trans "noticias" %}</h1>
+            </div>
+            <div class="noticias_controls_slider">
+                <div class="nav prev"></div>
+                <div class="noticias_controls"></div>
+                <div class="nav next"></div>
+            </div>
+            <div class="noticias_slider">
+            {% for noticia in noticias %}
+                <div class="slide">
+                    <div class="image">
+                        {% if noticia.imagen %}
+                            <img src="{% thumbnail noticia.imagen 220x150 %}" title="{{ noticia.nombre }}">
+                        {% endif %}
+                    </div>
+                    <h2>{{ noticia.nombre }}</h2>
+                    <div class="paragraph description">
+                        {{ noticia.descripcion|safe }}
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+
+        <div class="s s7">
+            <div class="angulo">
+                <img src="{{ STATIC_URL }}common/img/s7_angulo.png" alt="">
+            </div>
+            <div class="info">
+                <p>
+                    <span>{% trans "teléfono" %}</span> {{ empresa.telefono }}
+                    <span>{% trans "correo" %}</span> {{ empresa.email }}
+                </p>
+                <p><span>{% trans "dirección" %}</span> {{ empresa.direccion }}</p>
+            </div>
+            <div class="form">
+                <span id="form-ok"></span>
+                <form method="post" action="">
+                    {{ form.non_field_errors }}
+                    <div class="field">
+                        {% if form.nombre.errors %}
+                            <p>{{ form.nombre.errors }}</p>
+                        {% endif %}
+                        <label for="id_nombre">*{% trans "Nombres y Apellidos" %}</label>
+                        {{ form.nombre }}
+                    </div>
+                    <div class="field">
+                        {% if form.email.errors %}
+                            <p>{{ form.email.errors }}</p>
+                        {% endif %}
+                        <label for="id_email">*{% trans "Correo" %}</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="field">
+                        {% if form.unidad_negocio.errors %}
+                            <p>{{ form.unidad_negocio.errors }}</p>
+                        {% endif %}
+                        <label for="id_unidad_negocio">*{% trans "Área" %}</label>
+                        {{ form.unidad_negocio }}
+                    </div>
+                    <div class="comment">
+                        <div>
+                            <label for="id_comentario">{% trans "Comentario" %}</label>
+                        </div>
+                        {{ form.comentario }}
+                    </div>
+                    <div>
+                        *{% trans "Datos obligatorios" %}
+                    </div>
+                    <div class="right">
+                        <span class="boton" id="borrar">{% trans "Borrar" %}</span>
+                        <br />
+                        <input class="boton" type="submit" value="{% trans "Enviar" %}">
+                    </div>
+                </form>
+            </div>
+            <h1 class="typeface-js" style="font-family: MicrogrammaDBolExt; font-weight: normal;">{% trans "contáctenos" %}</h1>
+            <img class="mapa" src="{{ STATIC_URL }}common/img/s7_mapa.png" alt="{% trans "Ubicación" %}" title="{% trans "Ubicación" %}">
+            <div class="final">
+                <p>© Copyright 2012 QUIMERA holding group. All rigths reserved</p>
+            </div>
+        </div>
+
+        <div class="header">
+            <div class="menu">
+                <ul>
+                    <li>
+                        <span class="link" position="0">{% trans "inicio" %}</span>
+                    </li>
+                    <li>
+                        <span class="link" position="720">{% trans "quienes somos" %}</span>
+                    </li>
+                    <li>
+                        <span class="link" position="1370">{% trans "divisiones" %}</span>
+                    </li>
+                    <li>
+                        <span class="link" position="2070">{% trans "representantes" %}</span>
+                    </li>
+                    <li>
+                        <span class="link" position="2750">{% trans "responsabilidad social" %}</span>
+                    </li>
+                    <li>
+                        <span class="link" position="3400">{% trans "noticias" %}</span>
+                    </li>
+                    <li>
+                        <span class="link" position="4300">{% trans "contáctenos" %}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="menu_derecha">
+                <ul>
+{#                    <li>#}
+{#                        <a href="http://mail.quimerahg.com/" class="link">{% trans "correo" %}</a>#}
+{#                    </li>#}
+                    {% for lang in LANGUAGES %}
+                        <li>
+                          {% if LANGUAGE_CODE == lang.0 or not lang %}
+                              <span class="active_language">{{ lang.1 }}</span>
+                          {% else %}
+                              <form name="setLang{{ lang.1}}" action="/i18n/setlang/" method="POST">{% csrf_token %}
+                                  <input name="next" type="hidden" value="/" />
+                                  <input type="hidden" name="language" value="{{ lang.0 }}" />
+                                  <a href="#" onclick="document.setLang{{ lang.1 }}.submit();return false;">{{ lang.1 }}</a>
+                              </form>
+                          {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="compartir">
+            <ul>
+                <li>
+                    <a href="http://www.facebook.com/QUIMERAhg" target="_blank">
+                        <img src="{{ STATIC_URL }}common/img/face_bot.png" alt="facebook" title="Facebook">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://plus.google.com/u/0/b/106929685935410436750/106929685935410436750/posts" target="_blank">
+                        <img src="{{ STATIC_URL }}common/img/plus_bot.png" alt="google" title="Google+">
+                    </a>
+                </li>
+                <li>
+                    <a href="mailto:info@quimerahg.com" target="_blank">
+                        <img src="{{ STATIC_URL }}common/img/mail_bot.png" alt="mail" title="Mail">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

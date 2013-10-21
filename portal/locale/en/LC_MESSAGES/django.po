@@ -1,0 +1,160 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-02-20 08:38-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: models.py:284
+msgid "nombres y apellidos"
+msgstr "name and last name"
+
+#: models.py:285 templates/base.html:608
+msgid "correo"
+msgstr "mail"
+
+#: templates/base.html:57 templates/base.html.py:101 templates/base.html:254
+#: templates/base.html.py:586
+msgid "quienes somos"
+msgstr "about us"
+
+#: templates/base.html:58
+msgid "historia"
+msgstr "history"
+
+#: templates/base.html:59
+msgid "misión y visión"
+msgstr "mission & vision"
+
+#: templates/base.html:60
+msgid "valores"
+msgstr "values"
+
+#: templates/base.html:61
+msgid "filosofía"
+msgstr "philosophy"
+
+#: templates/base.html:104
+msgid "proyectos"
+msgstr "proyects"
+
+#: templates/base.html:108
+msgid "marcas"
+msgstr "brands"
+
+#: templates/base.html:112
+msgid "lineas"
+msgstr "lines"
+
+#: templates/base.html:116
+msgid "clientes"
+msgstr "clients"
+
+#: templates/base.html:120
+msgid "representante"
+msgstr "representative"
+
+#: templates/base.html:146
+msgid "Quimera"
+msgstr "Quimera"
+
+#: templates/base.html:163 templates/base.html.py:478
+msgid "Introducción"
+msgstr "Introduction"
+
+#: templates/base.html:164
+msgid "Políticas corporativas"
+msgstr "Corporate Policies"
+
+#: templates/base.html:165 templates/base.html.py:487
+msgid "Actividades"
+msgstr "Activities"
+
+#: templates/base.html:220
+msgid "Su mensaje ha sido enviado"
+msgstr "Your message has been sent"
+
+#: templates/base.html:260
+msgid "QUIENES SOMOS"
+msgstr "ABOUT US"
+
+#: templates/base.html:264
+msgid "HISTORIA"
+msgstr "HISTORY"
+
+#: templates/base.html:268
+msgid "MISIÓN Y VISIÓN"
+msgstr "MISSION & VISSION"
+
+#: templates/base.html:275
+msgid "VALORES"
+msgstr "VALUES"
+
+#: templates/base.html:279
+msgid "FILOSOFÍA"
+msgstr "PHILOSOPHY"
+
+#: templates/base.html:299 templates/base.html.py:589
+msgid "divisiones"
+msgstr "divisions"
+
+#: templates/base.html:425 templates/base.html.py:592
+msgid "representantes"
+msgstr "representatives"
+
+#: templates/base.html:472 templates/base.html.py:595
+msgid "responsabilidad social"
+msgstr "social responsability"
+
+#: templates/base.html:482
+msgid "Políticas"
+msgstr "Policies"
+
+#: templates/base.html:517 templates/base.html.py:598
+msgid "noticias"
+msgstr "news"
+
+#: templates/base.html:543
+msgid "contactos"
+msgstr "contacts"
+
+#: templates/base.html:546
+msgid "Ubicación"
+msgstr "Location"
+
+#: templates/base.html:557
+msgid "Datos obligatorios"
+msgstr "Required info"
+
+#: templates/base.html:563
+msgid "Enviar"
+msgstr "Send"
+
+#: templates/base.html:564
+msgid "Borrar"
+msgstr "Delete"
+
+#: templates/base.html:572
+msgid "Dirección"
+msgstr "Address"
+
+#: templates/base.html:583
+msgid "inicio"
+msgstr "home"
+
+#: templates/base.html:601
+msgid "contáctenos"
+msgstr "contact us"

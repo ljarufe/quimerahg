@@ -1,0 +1,71 @@
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}common/js/jquery.jqpopin/jquery.jqpopin.css" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}share/css/share.css" />
+
+<script type="text/javascript" src="{{ STATIC_URL }}common/js/jquery.jqpopin/jquey.jqpopin.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}share/js/share.js"></script>
+
+<script type="text/javascript">
+    var url = "http://{{ domain }}{{ object.get_absolute_url }}";
+</script>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1&appId=360681610629614";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="share">
+    <span class="button">Share</span>
+    <table>
+        <tbody>
+        {# Facebook #}
+        <tr>
+            {# Share #}
+            <td>
+                <a class="fb_share_button" href="http://www.facebook.com/sharer.php?u={% if object.get_absolute_url %}http%3A%2F%2F{{ domain }}{{ object.get_absolute_url }}{% else %}{{ object.get_share_url }}{% endif %}&amp;t={{ object }}" target="_blank">Share</a>
+            </td>
+            {# Like #}
+            <td>
+                <iframe src="//www.facebook.com/plugins/like.php?href={% if object.get_absolute_url %}http%3A%2F%2F{{ domain }}{{ object.get_absolute_url }}{% else %}{{ object.get_share_url }}{% endif %}&amp;send=false&amp;layout=button_count&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=arial&amp;height=21&amp;appId=360681610629614" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:75px; height:21px;" allowTransparency="true"></iframe>
+            </td>
+        </tr>
+        {# Google #}
+        <tr>
+            {# Share #}
+            <td>
+                <script src="https://apis.google.com/js/plusone.js"></script>
+                <div class="g-plus" data-action="share" data-href="{% if object.get_absolute_url %}http://{{ domain }}{{ object.get_absolute_url }}{% else %}{{ object.get_share_url }}{% endif %}" data-annotation="none"></div>
+            </td>
+            {# +1 #}
+            <td>
+                <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+                {% if object.google_account %}
+                    <div class="g-plusone" data-size="medium" data-annotation="none" data-href="{{ object.google_account }}"></div>
+                {% else %}
+                    <div class="g-plusone" data-size="medium" data-annotation="none" data-href="{% if object.get_absolute_url %}http://{{ domain }}{{ object.get_absolute_url }}{% else %}{{ object.get_share_url }}{% endif %}"></div>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            {# Twitter: Tweet #}
+            <td>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-via="{{ object.twitter_account }}" data-lang="en" data-url="{% if object.get_absolute_url %}http://{{ domain }}{{ object.get_absolute_url }}{% else %}{{ object.get_share_url }}{% endif %}" data-count="none">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+            </td>
+            {# e-mail #}
+            <td>
+                <span class="button mail">Enviar</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="mail-form">
+        <div class="close_popin">Cerrar X</div>
+        <div class="clear"></div>
+        <iframe id="mail-iframe" src="{% url send_share %}" width="260px" height="215px"></iframe>
+    </div>
+</div>

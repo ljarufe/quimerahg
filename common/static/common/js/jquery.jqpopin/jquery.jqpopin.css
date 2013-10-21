@@ -1,0 +1,23 @@
+/*
+Hoja de estilo para jqPopin
+Autor: Luis Jarufe
+
+Incluir junto con el archivo .js
+*/
+
+.jqpopin_lights_out {
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    background: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 9999;
+}
+.jqpopin_frame {
+    position: fixed;
+    z-index: 10000;
+}
